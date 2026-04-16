@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weekly To-Do Calendar</title>
+
+<style>
+body{
+    font-family: Arial;
+    padding:30px;
+    background:#f5f7fb;
+}
+
+h2{
+    text-align:center;
+}
+
+.calendar{
+    display:grid;
+    grid-template-columns: repeat(7,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.day{
+    background:white;
+    border-radius:8px;
+    border:1px solid #ddd;
+    padding:20px;
+    text-align:center;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.day:hover{
+    background:#e8f0ff;
+}
+
+.popup{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    width:350px;
+    max-width:90%;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.popup h3{
+    margin-top:0;
+}
+
+.task{
+    margin:8px 0;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-size:18px;
+    color:#888;
+}
+
+.close:hover{
+    color:black;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Weekly To-Do Calendar</h2>
+
+<div class="calendar">
+<div class="day" onclick="openPopup('mon')">Mon</div>
+<div class="day" onclick="openPopup('tue')">Tue</div>
+<div class="day" onclick="openPopup('wed')">Wed</div>
+<div class="day" onclick="openPopup('thu')">Thu</div>
+<div class="day" onclick="openPopup('fri')">Fri</div>
+<div class="day" onclick="openPopup('sat')">Sat</div>
+<div class="day" onclick="openPopup('sun')">Sun</div>
+</div>
+
+<div id="popup" class="popup">
+<span class="close" onclick="closePopup()">✖</span>
+<h3 id="dayTitle"></h3>
+<div id="taskList"></div>
+</div>
+
+<script>
+
+const tasks = {
+mon:["Exercise","Study"],
+tue:["Programming Practice"],
+wed:[],
+thu:["Clean Room"],
+fri:["Project Work"],
+sat:["Groceries"],
+sun:[]
+};
+
+function openPopup(day){
+
+let list = document.getElementById("taskList");
+list.innerHTML="";
+
+document.getElementById("dayTitle").innerText =
+day.charAt(0).toUpperCase()+day.slice(1);
+
+if(tasks[day].length===0){
+list.innerHTML="<p>-</p>";
+}
+else{
+tasks[day].forEach(task=>{
+let item=document.createElement("div");
+item.className="task";
+item.innerHTML=`<label>
+<input type="checkbox"> ${task}
+</label>`;
+list.appendChild(item);
+});
+}
+
+document.getElementById("popup").style.display="block";
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
